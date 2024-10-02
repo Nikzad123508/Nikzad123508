@@ -1,0 +1,58 @@
+main.pyscript.js
+import pygame
+import random
+pygame.init()
+width = 800
+height = 600
+window = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Snack Game")
+class Snack:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.speed = 10 
+
+    def move(self, direction):
+        if direction == "up":
+            self.y -= self.speed
+        elif direction == "down":
+            self.y += self.speed
+        elif direction == "left":
+            self.x -= self.speed
+        elif direction == "right":
+            self.x += self.speed 
+
+    def draw(self):
+        pygame.draw.rect(window, (0, 255, 0), (self.x, self.y, 20, 20)) 
+
+class Food:
+    def __init__(self):
+        self.x = random.randint(0, width - 20)
+        self.y = random.randint(0, height - 20) 
+
+    def draw(self):
+        pygame.draw.rect(window, (255, 0, 0), (self.x, self.y, 20, 20))
+snack = Snack(width/2, height/2)
+food = Food() 
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False 
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_UP]:
+        snack.move("up")
+    elif keys[pygame.K_DOWN]:
+        snack.move("down")
+    elif keys[pygame.K_LEFT]:
+        snack.move("left")
+    elif keys[pygame.K_RIGHT]:
+        snack.move("right") 
+
+    window.fill((0, 0, 0))
+    snack.draw()
+    food.draw()
+    pygame.display.update()
+http://game.run
